@@ -101,49 +101,49 @@ const loginUser = async (payload: TLoginUser) => {
   };
 };
 
-const changePassword = async (
-  userData: JwtPayload,
-  payload: { oldPassword: string; newPassword: string }
-) => {
-  // checking if the user is exist
-  const user = await User.isUserExistsByEmail(userData.email);
+// const changePassword = async (
+//   userData: JwtPayload,
+//   payload: { oldPassword: string; newPassword: string }
+// ) => {
+//   // checking if the user is exist
+//   const user = await User.isUserExistsByEmail(userData.email);
 
-  if (!user) {
-    throw new AppError(httpStatus.NOT_FOUND, 'This user is not found!');
-  }
+//   if (!user) {
+//     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found!');
+//   }
 
-  // checking if the user is blocked
+//   // checking if the user is blocked
 
-  const userStatus = user?.status;
+//   const userStatus = user?.status;
 
-  if (userStatus === 'BLOCKED') {
-    throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked!');
-  }
+//   if (userStatus === 'BLOCKED') {
+//     throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked!');
+//   }
 
-  //checking if the password is correct
+//   //checking if the password is correct
 
-  if (!(await User.isPasswordMatched(payload.oldPassword, user?.password)))
-    throw new AppError(httpStatus.FORBIDDEN, 'Password do not matched');
+//   if (!(await User.isPasswordMatched(payload.oldPassword, user?.password)))
+//     throw new AppError(httpStatus.FORBIDDEN, 'Password do not matched');
 
-  //hash new password
-  const newHashedPassword = await bcrypt.hash(
-    payload.newPassword,
-    Number(config.bcrypt_salt_rounds)
-  );
+//   //hash new password
+//   const newHashedPassword = await bcrypt.hash(
+//     payload.newPassword,
+//     Number(config.bcrypt_salt_rounds)
+//   );
 
-  await User.findOneAndUpdate(
-    {
-      email: userData.email,
-      role: userData.role,
-    },
-    {
-      password: newHashedPassword,
-      passwordChangedAt: new Date(),
-    }
-  );
+//   await User.findOneAndUpdate(
+//     {
+//       email: userData.email,
+//       role: userData.role,
+//     },
+//     {
+//       password: newHashedPassword,
+//       passwordChangedAt: new Date(),
+//     }
+//   );
 
-  return null;
-};
+//   return null;
+// };
 
 const refreshToken = async (token: string) => {
   // checking if the given token is valid
