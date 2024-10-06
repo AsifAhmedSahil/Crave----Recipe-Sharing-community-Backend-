@@ -195,9 +195,47 @@ const refreshToken = async (token: string) => {
   };
 };
 
+const forgetPassword = async(email:string) =>{
+
+  // check user is exist in database or not
+
+  const user = await User.isUserExistsByEmail(email)
+ 
+  if(!user){
+      throw new AppError(httpStatus.NOT_FOUND,"This user is not exist in database")
+  }
+
+  
+
+  
+
+  const jwtPayload = {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    username: user.username,
+    role: user.role,
+    status: user.status,
+  }
+
+  const resetToken = createToken(jwtPayload,config.jwt_access_secret as string,'10m')
+
+  console.log(resetToken)
+
+  const resetUIdLink = `http://localhost:3000?email=${user.email}&token=${resetToken}`
+
+    console.log(resetUIdLink)
+
+
+
+  
+
+}
+
 export const AuthServices = {
   registerUser,
   loginUser,
   changePassword,
   refreshToken,
+  forgetPassword
 };
