@@ -7,6 +7,7 @@ import { createToken } from '../../utils/verifyJWT';
 import { USER_ROLE } from '../User/user.constant';
 import { User } from '../User/user.model';
 import { TLoginUser, TRegisterUser } from './auth.interface';
+import { sendEmail } from '../../utils/emailSender';
 
 const registerUser = async (payload: TRegisterUser) => {
   // checking if the user is exist
@@ -225,6 +226,8 @@ const forgetPassword = async(email:string) =>{
   const resetUIdLink = `http://localhost:3000?email=${user.email}&token=${resetToken}`
 
     console.log(resetUIdLink)
+
+    sendEmail(user.email,resetUIdLink)
 
 
 
