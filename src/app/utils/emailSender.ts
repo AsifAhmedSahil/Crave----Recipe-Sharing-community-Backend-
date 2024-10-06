@@ -20,7 +20,7 @@ export const sendEmail = async(to:string , html:string) =>{
         from: 'asifahmedsahil.007@gmail.com', // sender address
         to ,
         subject: "Please change your password within 10 mins!", // Subject line
-        text: "hello, change your password", // plain text body
+        text: "hello, change your password with this link", // plain text body
         html, // html body
       });
 }

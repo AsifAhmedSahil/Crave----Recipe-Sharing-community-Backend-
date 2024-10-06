@@ -30,7 +30,7 @@ const registerUser = async (payload: TRegisterUser) => {
     email: newUser.email,
     username: newUser.username,
     role: newUser.role,
-    profilePhoto:newUser.profilePhoto ,
+    profilePhoto: newUser.profilePhoto,
     status: newUser.status,
   };
 
@@ -80,7 +80,7 @@ const loginUser = async (payload: TLoginUser) => {
     email: user.email,
     username: user.username,
     role: user.role,
-    profilePhoto:user.profilePhoto,
+    profilePhoto: user.profilePhoto,
     status: user.status,
   };
 
@@ -196,19 +196,17 @@ const refreshToken = async (token: string) => {
   };
 };
 
-const forgetPassword = async(email:string) =>{
-
+const forgetPassword = async (email: string) => {
   // check user is exist in database or not
 
-  const user = await User.isUserExistsByEmail(email)
- 
-  if(!user){
-      throw new AppError(httpStatus.NOT_FOUND,"This user is not exist in database")
+  const user = await User.isUserExistsByEmail(email);
+
+  if (!user) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'This user is not exist in database'
+    );
   }
-
-  
-
-  
 
   const jwtPayload = {
     _id: user._id,
@@ -217,28 +215,66 @@ const forgetPassword = async(email:string) =>{
     username: user.username,
     role: user.role,
     status: user.status,
+  };
+
+  const resetToken = createToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    '10m'
+  );
+
+  console.log(resetToken);
+
+  const resetUIdLink = `http://localhost:3000?email=${user.email}&token=${resetToken}`;
+
+  console.log(resetUIdLink);
+
+  sendEmail(user.email, resetUIdLink);
+};
+
+const resetPassword = async(payload:{email:string,newPassword:string},token:string) =>{
+
+  // check user is exist in database or not
+
+  const user = await User.isUserExistsByEmail(payload?.email)
+ 
+  if(!user){
+      throw new AppError(httpStatus.NOT_FOUND,"This user is not exist in database")
   }
 
-  const resetToken = createToken(jwtPayload,config.jwt_access_secret as string,'10m')
+ 
 
-  console.log(resetToken)
+  // verify is token is valid or not
+  const decoded = jwt.verify(token,config.jwt_access_secret as string) as JwtPayload 
+  console.log(decoded)
 
-  const resetUIdLink = `http://localhost:3000?email=${user.email}&token=${resetToken}`
+  if(payload.email !== decoded.email){
+      throw new AppError(httpStatus.FORBIDDEN,"You are forbiden.email not found")
+  }
 
-    console.log(resetUIdLink)
-
-    sendEmail(user.email,resetUIdLink)
-
-
-
-  
+  // hash new password
+  const hashedNewPassword = await bcrypt.hash(payload.newPassword,Number(config.bcrypt_salt_rounds))
+  console.log(hashedNewPassword)
+  await User.findOneAndUpdate(
+      {
+          email:decoded.email,
+          role:decoded.role
+      },
+      {
+          password: hashedNewPassword,
+          needPasswordChange:false,
+          passwordChangeAt : new Date()
+      }
+  )
 
 }
+
 
 export const AuthServices = {
   registerUser,
   loginUser,
   changePassword,
   refreshToken,
-  forgetPassword
+  forgetPassword,
+  resetPassword
 };
