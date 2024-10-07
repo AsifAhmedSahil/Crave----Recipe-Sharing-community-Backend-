@@ -225,7 +225,7 @@ const forgetPassword = async (email: string) => {
 
   console.log(resetToken);
 
-  const resetUIdLink = `http://localhost:3000?email=${user.email}&token=${resetToken}`;
+  const resetUIdLink = `http://localhost:3000/reset-password/?email=${user.email}&token=${resetToken}`;
 
   console.log(resetUIdLink);
 
