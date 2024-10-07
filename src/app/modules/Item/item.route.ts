@@ -27,13 +27,15 @@ router.get('/recipes', recipeController.getAllRecipes);
 
 router.get('/recipe/:id', recipeController.getSingleRecipe);
 
-// router.put(
-//   '/:id',
-//   auth(USER_ROLE.USER),
-//   validateRequest(ItemValidation.updateItemValidationSchema),
-//   ItemControllers.updateItem
-// );
+router.put(
+  '/recipe/:id',
+  // auth(USER_ROLE.USER),
+  validateRequest(recipeValidations.updateRecipeValidation),
+  recipeController.updateRecipe
+);
 
-// router.delete('/:id', auth(USER_ROLE.USER), ItemControllers.deleteItem);
+router.delete('/recipe/:id',
+  //  auth(USER_ROLE.USER),
+  recipeController.deleteRecipe);
 
 export const ItemRoutes = router;

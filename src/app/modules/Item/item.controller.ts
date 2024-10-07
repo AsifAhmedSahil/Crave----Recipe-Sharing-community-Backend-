@@ -40,42 +40,42 @@ const getSingleRecipe = catchAsync(async (req, res) => {
     });
 });
 
-// const updateRecipe = catchAsync(async (req, res) => {
-//     const { id } = req.params;
-//     const result = await recipeServices.updateRecipeIntoDB(id, req.body);
-//     if (!result) {
-//         return res.status(404).json({
-//             success: false,
-//             message: "Recipe not found",
-//         });
-//     }
-//     res.status(200).json({
-//         success: true,
-//         message: "Recipe updated successfully",
-//         data: result,
-//     });
-// });
+const updateRecipe = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const result = await recipeServices.updateRecipeIntoDB(id, req.body);
+    if (!result) {
+        return res.status(404).json({
+            success: false,
+            message: "Recipe not found",
+        });
+    }
+    res.status(200).json({
+        success: true,
+        message: "Recipe updated successfully",
+        data: result,
+    });
+});
 
-// const deleteRecipe = catchAsync(async (req, res) => {
-//     const { id } = req.params;
-//     const result = await recipeServices.deleteRecipeFromDB(id);
-//     if (!result) {
-//         return res.status(404).json({
-//             success: false,
-//             message: "Recipe not found",
-//         });
-//     }
-//     res.status(200).json({
-//         success: true,
-//         message: "Recipe deleted successfully",
-//         data: result,
-//     });
-// });
+const deleteRecipe = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const result = await recipeServices.deleteRecipeFromDB(id);
+    if (!result) {
+        return res.status(404).json({
+            success: false,
+            message: "Recipe not found",
+        });
+    }
+    res.status(200).json({
+        success: true,
+        message: "Recipe deleted successfully",
+        data: result,
+    });
+});
 
 export const recipeController = {
     createRecipe,
     getAllRecipes,
     getSingleRecipe,
-    // updateRecipe,
-    // deleteRecipe,
+    updateRecipe,
+    deleteRecipe,
 };
