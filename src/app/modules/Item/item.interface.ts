@@ -1,21 +1,16 @@
-import { ObjectId } from 'mongoose';
-import { DISTRICTS, ITEM_STATUS } from './item.constant';
+// src/interfaces/recipe.interface.ts
 
-type District = (typeof DISTRICTS)[number];
+import { Types } from "mongoose";
 
-export type TItem = {
+export interface TRecipe {
   title: string;
   description: string;
-  images?: string[];
-  city: District;
-  location: string;
-  dateFound: Date;
-  status: keyof typeof ITEM_STATUS;
-  isReported?: boolean;
-  reportCount?: number;
-  user: ObjectId;
-  category: ObjectId;
-  questions?: string[];
-  createdAt?: Date;
-  updatedAt?: Date;
-};
+  ingredients: {
+      name: string;
+      quantity: string; // e.g., "2 cups", "1 tablespoon"
+  }[];
+  instructions: string;
+  image?: string;
+  creator: Types.ObjectId; // Assuming this is a User ID
+  isDeleted?: boolean;
+}

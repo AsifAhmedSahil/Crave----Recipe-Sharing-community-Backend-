@@ -1,80 +1,40 @@
-import { Schema, model } from 'mongoose';
-import { DISTRICTS, ITEM_STATUS } from './item.constant';
-import { TItem } from './item.interface';
-import { ItemCategory } from '../ItemCategory/itemCategory.model';
+// src/models/recipe.model.ts
 
-const itemSchema = new Schema<TItem>(
-  {
+import { Schema, model } from "mongoose";
+import { TRecipe } from "./item.interface";
+
+
+const recipeModel = new Schema<TRecipe>({
     title: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
+        unique: true,
     },
     description: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
     },
-    images: {
-      type: [String],
-      default: [],
+    ingredients: [{
+        name: { type: String, required: true },
+        quantity: { type: String, required: true },
+    }],
+    instructions: {
+        type: String,
+        required: true,
     },
-    location: {
-      type: String,
-      required: true,
+    image: {
+        type: String,
+        required: false,
     },
-    city: {
-      type: String,
-      enum: DISTRICTS,
-      required: true,
+    creator: {
+        type: Schema.Types.ObjectId,
+        ref: 'User', // Assuming you have a User model
+        required: true,
     },
-    dateFound: {
-      type: Date,
-      required: true,
+    isDeleted: {
+        type: Boolean,
+        default: false,
     },
-    status: {
-      type: String,
-      enum: Object.keys(ITEM_STATUS),
-      required: true,
-    },
-    isReported: {
-      type: Boolean,
-      default: false,
-    },
-    reportCount: {
-      type: Number,
-      default: 0,
-    },
-    category: {
-      type: Schema.Types.ObjectId,
-      ref: 'ItemCategory',
-      required: true,
-    },
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-    questions: {
-      type: [String],
-      default: [],
-    },
-  },
-  {
-    timestamps: true,
-    virtuals: true,
-  }
-);
-
-// Middleware to increment item count in associated category
-itemSchema.post('save', async function (doc) {
-  try {
-    await ItemCategory.findByIdAndUpdate(doc.category, {
-      $inc: { postCount: 1 },
-    });
-  } catch (error) {
-    throw new Error(
-      `Failed to increment item count for category ${doc.category}: ${error}`
-    );
-  }
 });
 
-export const Item = model<TItem>('Item', itemSchema);
+export const Recipe = model<TRecipe>("Recipe", recipeModel);

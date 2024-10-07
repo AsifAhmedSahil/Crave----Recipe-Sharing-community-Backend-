@@ -1,78 +1,39 @@
-import { QueryBuilder } from '../../builder/QueryBuilder';
-import { TImageFiles } from '../../interfaces/image.interface';
-// import {
-//   addDocumentToIndex,
-//   deleteDocumentFromIndex,
-// } from '../../utils/meilisearch';
-import { ItemsSearchableFields } from './item.constant';
-import { TItem } from './item.interface';
-import { Item } from './item.model';
-import {
-  SearchItemByDateRangeQueryMaker,
-  SearchItemByUserQueryMaker,
-} from './item.utils';
+// src/services/recipe.service.ts
 
-const createItemIntoDB = async (payload: TItem, images: TImageFiles) => {
-  const { itemImages } = images;
-  payload.images = itemImages.map((image) => image.path);
+import { TRecipe } from "./item.interface";
+import { Recipe } from "./item.model";
 
-  const result = await Item.create(payload);
 
-  // await addDocumentToIndex(result, 'items');
-  return result;
+const createRecipeIntoDB = async (payload: TRecipe) => {
+    const result = await Recipe.create(payload);
+    return result;
 };
 
-const getAllItemsFromDB = async (query: Record<string, unknown>) => {
-  query = (await SearchItemByUserQueryMaker(query)) || query;
-
-  // Date range search
-  query = (await SearchItemByDateRangeQueryMaker(query)) || query;
-
-  const itemQuery = new QueryBuilder(
-    Item.find().populate('user').populate('category'),
-    query
-  )
-    .filter()
-    .search(ItemsSearchableFields)
-    .sort()
-    // .paginate()
-    .fields();
-
-  const result = await itemQuery.modelQuery;
-
-  return result;
+const getAllRecipesFromDB = async () => {
+    return await Recipe.find({ isDeleted: false }).populate('creator', 'username'); // Populate creator's username
 };
 
-const getItemFromDB = async (itemId: string) => {
-  const result = await Item.findById(itemId)
-    .populate('user')
-    .populate('category');
-  return result;
-};
+// const getSingleRecipeFromDB = async (id: string) => {
+//     return await Recipe.findById(id).populate('creator', 'username');
+// };
 
-const updateItemInDB = async (itemId: string, payload: TItem) => {
-  const result = await Item.findByIdAndUpdate(itemId, payload, { new: true });
-  // if (result) {
-  //   await addDocumentToIndex(result, 'items');
-  // } else {
-  //   throw new Error(`Item with ID ${itemId} not found.`);
-  // }
-  return result;
-};
+// const updateRecipeIntoDB = async (id: string, payload: Partial<TRecipe>) => {
+//     const result = await Recipe.findByIdAndUpdate(id, payload, { new: true });
+//     return result;
+// };
 
-const deleteItemFromDB = async (itemId: string) => {
-  const result = await Item.findByIdAndDelete(itemId);
-  // const deletedItemId = result?._id;
-  // if (deletedItemId) {
-  //   await deleteDocumentFromIndex('items', deletedItemId.toString());
-  // }
-  return result;
-};
+// const deleteRecipeFromDB = async (id: string) => {
+//     const result = await Recipe.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
+//     if (!result) {
+//         throw new Error("Failed to delete recipe from database");
+//     }
+//     return result;
+// };
 
-export const ItemServices = {
-  createItemIntoDB,
-  getAllItemsFromDB,
-  getItemFromDB,
-  updateItemInDB,
-  deleteItemFromDB,
+export const recipeServices = {
+    createRecipeIntoDB,
+    getAllRecipesFromDB,
+    // getSingleRecipeFromDB,
+    // updateRecipeIntoDB,
+    // deleteRecipeFromDB,
 };

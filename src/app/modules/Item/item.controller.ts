@@ -1,79 +1,81 @@
-import httpStatus from 'http-status';
-import AppError from '../../errors/AppError';
-import { TImageFiles } from '../../interfaces/image.interface';
-import { catchAsync } from '../../utils/catchAsync';
-import sendResponse from '../../utils/sendResponse';
-import { ItemServices } from './item.service';
+// src/controllers/recipe.controller.ts
 
-const createItem = catchAsync(async (req, res) => {
-  if (!req.files) {
-    throw new AppError(400, 'Please upload an image');
-  }
 
-  const item = await ItemServices.createItemIntoDB(
-    req.body,
-    req.files as TImageFiles
-  );
+import { catchAsync } from "../../utils/catchAsync";
+import { recipeServices } from "./item.service";
 
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Item created successfully',
-    data: item,
-  });
+
+const createRecipe = catchAsync(async (req, res) => {
+  console.log(req.body)
+    const result = await recipeServices.createRecipeIntoDB({ ...req.body});
+    res.status(200).json({
+        success: true,
+        message: "Recipe created successfully",
+        data: result,
+    });
 });
 
-const getAllItems = catchAsync(async (req, res) => {
-  const item = await ItemServices.getAllItemsFromDB(req.query);
-
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Item retrieved successfully',
-    data: item,
-  });
+const getAllRecipes = catchAsync(async (req, res) => {
+    const result = await recipeServices.getAllRecipesFromDB();
+    res.status(200).json({
+        success: true,
+        message: "All recipes retrieved successfully",
+        data: result,
+    });
 });
 
-const getItem = catchAsync(async (req, res) => {
-  const itemId = req.params.id;
-  const item = await ItemServices.getItemFromDB(itemId);
+// const getSingleRecipe = catchAsync(async (req, res) => {
+//     const { id } = req.params;
+//     const result = await recipeServices.getSingleRecipeFromDB(id);
+//     if (!result) {
+//         return res.status(404).json({
+//             success: false,
+//             message: "Recipe not found",
+//         });
+//     }
+//     res.status(200).json({
+//         success: true,
+//         message: "Recipe retrieved successfully",
+//         data: result,
+//     });
+// });
 
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Item retrieved successfully',
-    data: item,
-  });
-});
+// const updateRecipe = catchAsync(async (req, res) => {
+//     const { id } = req.params;
+//     const result = await recipeServices.updateRecipeIntoDB(id, req.body);
+//     if (!result) {
+//         return res.status(404).json({
+//             success: false,
+//             message: "Recipe not found",
+//         });
+//     }
+//     res.status(200).json({
+//         success: true,
+//         message: "Recipe updated successfully",
+//         data: result,
+//     });
+// });
 
-const updateItem = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const updatedItem = await ItemServices.updateItemInDB(id, req.body);
+// const deleteRecipe = catchAsync(async (req, res) => {
+//     const { id } = req.params;
+//     const result = await recipeServices.deleteRecipeFromDB(id);
+//     if (!result) {
+//         return res.status(404).json({
+//             success: false,
+//             message: "Recipe not found",
+//         });
+//     }
+//     res.status(200).json({
+//         success: true,
+//         message: "Recipe deleted successfully",
+//         data: result,
+//     });
+// });
 
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Item updated successfully',
-    data: updatedItem,
-  });
-});
-
-const deleteItem = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  await ItemServices.deleteItemFromDB(id);
-
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Item deleted successfully',
-    data: null,
-  });
-});
-
-export const ItemControllers = {
-  createItem,
-  getAllItems,
-  getItem,
-  updateItem,
-  deleteItem,
+export const recipeController = {
+    createRecipe,
+    getAllRecipes,
+    // getSingleRecipe,
+    // updateRecipe,
+    // deleteRecipe,
 };
