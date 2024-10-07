@@ -232,7 +232,7 @@ const forgetPassword = async (email: string) => {
   sendEmail(user.email, resetUIdLink);
 };
 
-const resetPassword = async(payload:{email:string,newPassword:string},token:string) =>{
+const resetPassword = async(payload:{email:string,password:string},token:string) =>{
 
   // check user is exist in database or not
 
@@ -253,7 +253,7 @@ const resetPassword = async(payload:{email:string,newPassword:string},token:stri
   }
 
   // hash new password
-  const hashedNewPassword = await bcrypt.hash(payload.newPassword,Number(config.bcrypt_salt_rounds))
+  const hashedNewPassword = await bcrypt.hash(payload.password,Number(config.bcrypt_salt_rounds))
   console.log(hashedNewPassword)
   await User.findOneAndUpdate(
       {

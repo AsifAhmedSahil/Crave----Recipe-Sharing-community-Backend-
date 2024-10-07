@@ -53,11 +53,12 @@ const resetPasswordValidation = z.object({
       email:z.string({
           required_error: 'email id is required!'
       }),
-      newPassword:z.string({
+      password:z.string({
           required_error: 'password is required!'
       }),
   })
 })
+
 
 export const AuthValidation = {
   registerValidationSchema,
