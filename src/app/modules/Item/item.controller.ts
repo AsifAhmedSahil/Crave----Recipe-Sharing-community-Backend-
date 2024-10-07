@@ -24,21 +24,21 @@ const getAllRecipes = catchAsync(async (req, res) => {
     });
 });
 
-// const getSingleRecipe = catchAsync(async (req, res) => {
-//     const { id } = req.params;
-//     const result = await recipeServices.getSingleRecipeFromDB(id);
-//     if (!result) {
-//         return res.status(404).json({
-//             success: false,
-//             message: "Recipe not found",
-//         });
-//     }
-//     res.status(200).json({
-//         success: true,
-//         message: "Recipe retrieved successfully",
-//         data: result,
-//     });
-// });
+const getSingleRecipe = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const result = await recipeServices.getSingleRecipeFromDB(id);
+    if (!result) {
+        return res.status(404).json({
+            success: false,
+            message: "Recipe not found",
+        });
+    }
+    res.status(200).json({
+        success: true,
+        message: "Recipe retrieved successfully",
+        data: result,
+    });
+});
 
 // const updateRecipe = catchAsync(async (req, res) => {
 //     const { id } = req.params;
@@ -75,7 +75,7 @@ const getAllRecipes = catchAsync(async (req, res) => {
 export const recipeController = {
     createRecipe,
     getAllRecipes,
-    // getSingleRecipe,
+    getSingleRecipe,
     // updateRecipe,
     // deleteRecipe,
 };
