@@ -35,9 +35,24 @@ const getSingleUser = catchAsync(async (req, res) => {
     data: user,
   });
 });
+const followUser = catchAsync(async (req, res) => {
+  const { followerId, followingId } = req.body;
+  const follower = await UserServices.followUser(followerId, followingId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'User Retrieved Successfully',
+    data: follower,
+  });
+});
+
+
+
 
 export const UserControllers = {
   getSingleUser,
   userRegister,
   getAllUsers,
+  followUser 
 };

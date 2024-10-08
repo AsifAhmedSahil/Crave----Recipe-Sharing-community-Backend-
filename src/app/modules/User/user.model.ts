@@ -44,13 +44,15 @@ const userSchema = new Schema<TUser, IUserModel>(
     },
     profilePhoto: {
       type: String,
-      default: null
+      default: null,
     },
     type: {
       type: String,
       enum: Object.keys(USER_TYPES),
       default: USER_TYPES.GENERAL,
     },
+    followerIds: [{ type: String,}],
+    followingIds: [{ type: String, }],
   },
   {
     timestamps: true,
@@ -62,13 +64,18 @@ userSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this; // doc
   // hashing password and save into DB
+  if (user.isModified('password')) {
+    if (!user.password) {
+        return next(new Error("Password is required"));
+    }
 
-  user.password = await bcryptjs.hash(
-    user.password,
-    Number(config.bcrypt_salt_rounds)
-  );
+    user.password = await bcryptjs.hash(
+        user.password,
+        Number(config.bcrypt_salt_rounds)
+    );
+}
 
-  next();
+next();
 });
 
 // set '' after saving password

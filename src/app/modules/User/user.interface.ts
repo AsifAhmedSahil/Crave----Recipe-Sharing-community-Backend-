@@ -15,6 +15,8 @@ export type TUser = {
   type: keyof typeof USER_TYPES;
   createdAt?: Date;
   updatedAt?: Date;
+  followerIds?: string[]; 
+  followingIds?: string[]; 
 };
 
 export interface IUserModel extends Model<TUser> {

@@ -15,5 +15,6 @@ router.post(
   validateRequest(UserValidation.createUserValidationSchema),
   UserControllers.userRegister
 );
+router.post('/follow', UserControllers.followUser);
 router.get('/', UserControllers.getAllUsers);
 router.get('/:id', UserControllers.getSingleUser);

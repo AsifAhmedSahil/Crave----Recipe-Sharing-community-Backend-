@@ -28,8 +28,30 @@ const getSingleUserFromDB = async (id: string) => {
   return user;
 };
 
+const followUser = async (followerId: string, followingId: string) => {
+  const follower = await User.findById(followerId);
+  const following = await User.findById(followingId);
+
+  if (!follower || !following) {
+      throw new Error("User not found");
+  }
+
+  if (follower?.followingIds?.includes(followingId)) {
+      throw new Error("You are already following this user");
+  }
+
+  follower?.followingIds?.push(followingId);
+  following.followerIds?.push(followerId);
+
+  await follower.save();
+  await following.save();
+  
+  return { success: true };
+};
+
 export const UserServices = {
   createUser,
   getAllUsersFromDB,
   getSingleUserFromDB,
+  followUser
 };
