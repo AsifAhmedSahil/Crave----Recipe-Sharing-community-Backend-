@@ -29,6 +29,18 @@ router.post(
   recipeController.rateRecipe
 
 )
+router.post(
+  "/addComment",
+  validateRequest(recipeValidations.addCommentValidation),
+  recipeController.addComment
+
+)
+router.post(
+  "/deleteComment",
+  validateRequest(recipeValidations.addCommentValidation),
+  recipeController.addComment
+
+)
 
 router.get('/recipes', recipeController.getAllRecipes);
 
@@ -44,5 +56,8 @@ router.put(
 router.delete('/recipe/:id',
   //  auth(USER_ROLE.USER),
   recipeController.deleteRecipe);
+
+router.post("/recipe/upvote", recipeController.upvote);
+router.post("/recipe/downvote", recipeController.downvote);
 
 export const ItemRoutes = router;

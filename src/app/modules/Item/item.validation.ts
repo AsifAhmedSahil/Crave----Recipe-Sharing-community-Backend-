@@ -51,8 +51,17 @@ const rateRecipeValidation = z.object({
   }),
 });
 
+const addCommentValidation = z.object({
+    body: z.object({
+        userId: z.string(),
+        recipeId: z.string(), 
+        content: z.string().min(1, { message: "Content cannot be empty" }), // Ensure content is not empty
+    }),
+});
+
 export const recipeValidations = {
     createRecipeValidation,
     updateRecipeValidation,
-    rateRecipeValidation
+    rateRecipeValidation,
+    addCommentValidation
 };

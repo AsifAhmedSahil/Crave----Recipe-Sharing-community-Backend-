@@ -97,6 +97,39 @@ const rateRecipe = catchAsync(async (req, res) => {
     data: updatedRecipe,
 });
 });
+const addComment = catchAsync(async (req, res) => {
+    const { recipeId, content,userId } = req.body;
+    
+
+    const comments = await recipeServices.addCommentIntoDb(recipeId, userId, content);
+    res.status(200).json({
+        success: true,
+        message: "Comment posted successfully",
+        data: comments,
+    });
+});
+const upvote = catchAsync(async (req, res) => {
+    const { recipeId, userId } = req.body;
+
+    try {
+        const updatedRecipe = await recipeServices.upvoteRecipe(recipeId, userId);
+        res.status(200).json({ success: true, data: updatedRecipe });
+    } catch (error) {
+        res.status(400).json({ success: false, message: error });
+    }
+});
+const downvote = catchAsync(async (req, res) => {
+    const { recipeId, userId } = req.body;
+
+        try {
+            const updatedRecipe = await recipeServices.downvoteRecipe(recipeId, userId);
+            res.status(200).json({ success: true, data: updatedRecipe });
+        } catch (error) {
+            res.status(400).json({ success: false, message: error });
+        }
+});
+
+
 
 export const recipeController = {
     createRecipe,
@@ -104,5 +137,8 @@ export const recipeController = {
     getSingleRecipe,
     updateRecipe,
     deleteRecipe,
-    rateRecipe
+    rateRecipe,
+    addComment,
+    upvote,
+    downvote
 };

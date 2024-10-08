@@ -40,7 +40,15 @@ const recipeModel = new Schema<TRecipe>({
         recipeId: { type: String }, 
         stars: { type: Number, min: 1, max: 5 }
      }], default: [] },
-    comments: { type: [{ user: { type: Schema.Types.ObjectId, ref: 'User' }, content: { type: String } }], default: [] }
+    comments: { type: [{
+        userId: { type: String }, 
+        recipeId: { type: String },
+        content: { type: String },
+        createdAt: { type: Date, default: Date.now },
+        updatedAt: { type: Date, default: Date.now },
+         }], default: [] },
+         upvotes: [{ userId: { type: String } }], // Upvotes array
+         downvotes: [{ userId: { type: String } }], // Downvotes array
 });
 
 export const Recipe = model<TRecipe>("Recipe", recipeModel);

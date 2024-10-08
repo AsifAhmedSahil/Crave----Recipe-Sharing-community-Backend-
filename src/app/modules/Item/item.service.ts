@@ -49,6 +49,72 @@ export const rateRecipeInDB = async (recipeId: string, userId: string, stars: nu
   await recipe.save();
   return recipe; // Return the updated recipe
 };
+export const addCommentIntoDb = async (recipeId: string, userId: string, content:string) => {
+    const recipe = await Recipe.findById(recipeId);
+    if (!recipe) {
+        throw new Error("Recipe not found");
+    }
+
+    const newComment = {
+        recipeId,
+        userId,
+        content,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+    };
+
+    recipe.comments.push(newComment);
+    await recipe.save();
+    return recipe.comments; // Return the updated comments
+};
+
+export const upvoteRecipe = async (recipeId: string, userId: string) => {
+    const recipe = await Recipe.findById(recipeId);
+    if (!recipe) {
+        throw new Error("Recipe not found");
+    }
+
+    // Check if the user has already upvoted
+    const existingUpvote = recipe.upvotes.find(upvote => upvote.userId === userId);
+    if (existingUpvote) {
+        throw new Error("You have already upvoted this recipe");
+    }
+
+    // Remove any existing downvote by the user
+    recipe.downvotes = recipe.downvotes.filter(downvote => downvote.userId !== userId);
+
+    // Add the upvote
+    recipe.upvotes.push({ userId });
+    await recipe.save();
+
+    return recipe; // Return the updated recipe
+};
+export const downvoteRecipe = async (recipeId: string, userId: string) => {
+    const recipe = await Recipe.findById(recipeId);
+    if (!recipe) {
+        throw new Error("Recipe not found");
+    }
+
+    // Check if the user has already downvoted
+    const existingDownvote = recipe.downvotes.find(downvote => downvote.userId === userId);
+    if (existingDownvote) {
+        throw new Error("You have already downvoted this recipe");
+    }
+
+    // Remove any existing upvote by the user
+    recipe.upvotes = recipe.upvotes.filter(upvote => upvote.userId !== userId);
+
+    // Add the downvote
+    recipe.downvotes.push({ userId });
+    await recipe.save();
+
+    return recipe; // Return the updated recipe
+
+    
+};
+
+
+
 
 export const recipeServices = {
     createRecipeIntoDB,
@@ -56,5 +122,9 @@ export const recipeServices = {
     getSingleRecipeFromDB,
     updateRecipeIntoDB,
     deleteRecipeFromDB,
-    rateRecipeInDB
+    rateRecipeInDB,
+    addCommentIntoDb,
+    upvoteRecipe,
+    downvoteRecipe
+    // deleteUserComment
 };
