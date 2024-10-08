@@ -27,8 +27,8 @@ const recipeModel = new Schema<TRecipe>({
         required: false,
     },
     creator: {
-        type: Schema.Types.ObjectId,
-        ref: 'User', // Assuming you have a User model
+        type: String,
+        // Assuming you have a User model
         required: true,
     },
     isDeleted: {

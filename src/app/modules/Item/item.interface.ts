@@ -1,6 +1,6 @@
 // src/interfaces/recipe.interface.ts
 
-import { Types } from 'mongoose';
+
 
 export interface TRecipe {
   title: string;
@@ -11,7 +11,7 @@ export interface TRecipe {
   }[];
   instructions: string;
   image?: string;
-  creator: Types.ObjectId; // Assuming this is a User ID
+  creator:string; // Assuming this is a User ID
   isDeleted?: boolean;
   ratings: { userId: string; recipeId: string; stars: number }[];
   comments: {

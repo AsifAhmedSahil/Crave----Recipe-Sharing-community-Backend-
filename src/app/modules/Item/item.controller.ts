@@ -55,6 +55,23 @@ const getSingleRecipe = catchAsync(async (req, res) => {
         data: result,
     });
 });
+const getMyRecipe = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    console.log(id)
+    const result = await recipeServices.getMyRecipeFromDB(id);
+    if (!result) {
+        return res.status(404).json({
+            success: false,
+            message: "Recipe not found",
+        });
+    }
+    res.status(200).json({
+        success: true,
+        message: "Recipe retrieved successfully",
+        data: result,
+    });
+});
+
 
 const updateRecipe = catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -140,5 +157,6 @@ export const recipeController = {
     rateRecipe,
     addComment,
     upvote,
-    downvote
+    downvote,
+    getMyRecipe
 };

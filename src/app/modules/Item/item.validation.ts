@@ -15,9 +15,7 @@ const createRecipeValidation = z.object({
         ),
         instructions: z.string(),
         image: z.string().optional(),
-        creator: z.string().refine((id) => isValidObjectId(id), {
-          message: "Creator must be a valid ObjectId",
-      }),
+        creator: z.string(),
         isDeleted: z.boolean().optional(),
         type: z.enum(['free', 'premium'], {
             message: "Type must be either 'free' or 'premium'",

@@ -45,6 +45,7 @@ router.post(
 router.get('/recipes', recipeController.getAllRecipes);
 
 router.get('/recipe/:id', recipeController.getSingleRecipe);
+router.get('/recipe/my-recipe/:id', recipeController.getMyRecipe);
 
 router.put(
   '/recipe/:id',

@@ -17,6 +17,14 @@ const getSingleRecipeFromDB = async (id: string) => {
     return await Recipe.findById(id).populate('creator', 'username');
 };
 
+const getMyRecipeFromDB = async (id: string) => {
+    const recipes = await Recipe.find({ creator: id, isDeleted: false });
+
+    return recipes; // Return the array of recipes
+};
+
+
+
 const updateRecipeIntoDB = async (id: string, payload: Partial<TRecipe>) => {
     const result = await Recipe.findByIdAndUpdate(id, payload, { new: true });
     return result;
@@ -125,6 +133,7 @@ export const recipeServices = {
     rateRecipeInDB,
     addCommentIntoDb,
     upvoteRecipe,
-    downvoteRecipe
+    downvoteRecipe,
+    getMyRecipeFromDB
     // deleteUserComment
 };
