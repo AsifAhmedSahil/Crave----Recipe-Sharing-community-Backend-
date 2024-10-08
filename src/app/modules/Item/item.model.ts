@@ -49,6 +49,11 @@ const recipeModel = new Schema<TRecipe>({
          }], default: [] },
          upvotes: [{ userId: { type: String } }], // Upvotes array
          downvotes: [{ userId: { type: String } }], // Downvotes array
+         type: {
+            type: String,
+            enum: ['free', 'premium'], // Allowable values
+            required: true,
+        },
 });
 
 export const Recipe = model<TRecipe>("Recipe", recipeModel);

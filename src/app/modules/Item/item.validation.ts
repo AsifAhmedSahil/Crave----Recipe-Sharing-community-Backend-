@@ -19,6 +19,9 @@ const createRecipeValidation = z.object({
           message: "Creator must be a valid ObjectId",
       }),
         isDeleted: z.boolean().optional(),
+        type: z.enum(['free', 'premium'], {
+            message: "Type must be either 'free' or 'premium'",
+        }),
     }),
 });
 
