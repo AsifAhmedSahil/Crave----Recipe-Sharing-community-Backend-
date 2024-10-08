@@ -52,6 +52,53 @@ const registerUser = async (payload: TRegisterUser) => {
     refreshToken,
   };
 };
+
+const registerAdmin = async (payload: TRegisterUser) => {
+  // Check if the admin already exists by email
+  const existingAdmin = await User.isUserExistsByEmail(payload.email);
+  if (existingAdmin) {
+    throw new AppError(httpStatus.CONFLICT, 'This admin already exists!');
+  }
+
+  // Set role to ADMIN
+  payload.role = USER_ROLE.ADMIN;
+
+  // Create new admin user
+  const newAdmin = await User.create(payload);
+
+  // Prepare JWT payload
+  const jwtPayload = {
+    _id: newAdmin._id,
+    name: newAdmin.name,
+    email: newAdmin.email,
+    username: newAdmin.username,
+    role: newAdmin.role,
+    profilePhoto: newAdmin.profilePhoto,
+    status: newAdmin.status,
+  };
+
+  // Generate access token
+  const accessToken = createToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string
+  );
+
+  // Generate refresh token
+  const refreshToken = createToken(
+    jwtPayload,
+    config.jwt_refresh_secret as string,
+    config.jwt_refresh_expires_in as string
+  );
+
+  // Return tokens and admin data
+  return {
+    accessToken,
+    refreshToken,
+    user: jwtPayload,  // Optionally return admin data
+  };
+};
+
 const loginUser = async (payload: TLoginUser) => {
   // checking if the user is exist
   const user = await User.isUserExistsByEmail(payload?.email);
@@ -277,5 +324,6 @@ export const AuthServices = {
   changePassword,
   refreshToken,
   forgetPassword,
-  resetPassword
+  resetPassword,
+  registerAdmin
 };

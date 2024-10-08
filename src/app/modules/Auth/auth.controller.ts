@@ -24,6 +24,16 @@ const registerUser = catchAsync(async (req, res) => {
   });
 });
 
+const registerAdminController = catchAsync(async (req, res) => {
+  const result = await AuthServices.registerAdmin(req.body);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.CREATED,
+    message: 'Admin registered successfully',
+    data: result,
+  });
+});
+
 const loginUser = catchAsync(async (req, res) => {
   const result = await AuthServices.loginUser(req.body);
   const { refreshToken, accessToken } = result;
@@ -101,5 +111,6 @@ export const AuthControllers = {
   changePassword,
   refreshToken,
   forgetPassword,
-  resetPassword
+  resetPassword,
+  registerAdminController
 };

@@ -15,6 +15,11 @@ router.post(
   AuthControllers.registerUser
 );
 router.post(
+  '/adminRegister',
+  
+  AuthControllers.registerAdminController
+);
+router.post(
   '/login',
   validateRequest(AuthValidation.loginValidationSchema),
   AuthControllers.loginUser
