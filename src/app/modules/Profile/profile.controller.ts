@@ -7,13 +7,14 @@ import { TImageFile } from "../../interfaces/image.interface";
 
 const getMyProfile = catchAsync(async (req: Request, res: Response) => {
     const user = req.user;
-    const result = await ProfileServices.getMyProfile(user);
+    console.log(user)
+    // const result = await ProfileServices.getMyProfile(user);
 
     sendResponse(res, {
         success: true,
         statusCode: httpStatus.OK,
         message: 'My Profile Retrive Successfully',
-        data: result,
+        data: null,
     });
 });
 

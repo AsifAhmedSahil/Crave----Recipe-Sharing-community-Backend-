@@ -35,6 +35,19 @@ const getSingleUser = catchAsync(async (req, res) => {
     data: user,
   });
 });
+
+const updateUser = catchAsync(async (req, res) => {
+  const userId = req.params.id; // Get user ID from the URL
+  const updatedUser = await UserServices.updateUser(userId, req.body);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'User updated successfully',
+    data: updatedUser,
+  });
+});
+
 const followUser = catchAsync(async (req, res) => {
   const { followerId, followingId } = req.body;
   const follower = await UserServices.followUser(followerId, followingId);
@@ -66,5 +79,6 @@ export const UserControllers = {
   userRegister,
   getAllUsers,
   followUser ,
-  unfollowUser
+  unfollowUser,
+  updateUser
 };
