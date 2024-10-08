@@ -48,6 +48,30 @@ const updateUser = catchAsync(async (req, res) => {
   });
 });
 
+const blockUser = catchAsync(async (req, res) => {
+  const { id } = req.params; // Assuming userId is passed in the route params
+  const updatedUser = await UserServices.updateUserStatus(id, 'BLOCKED');
+
+  sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'User blocked successfully',
+      data: updatedUser,
+  });
+});
+
+const unblockUser = catchAsync(async (req, res) => {
+  const { id } = req.params; // Assuming userId is passed in the route params
+  const updatedUser = await UserServices.updateUserStatus(id, 'ACTIVE');
+
+  sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'User unblocked successfully',
+      data: updatedUser,
+  });
+});
+
 const followUser = catchAsync(async (req, res) => {
   const { followerId, followingId } = req.body;
   const follower = await UserServices.followUser(followerId, followingId);
@@ -80,5 +104,7 @@ export const UserControllers = {
   getAllUsers,
   followUser ,
   unfollowUser,
-  updateUser
+  updateUser,
+  blockUser,
+  unblockUser
 };

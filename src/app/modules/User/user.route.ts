@@ -20,3 +20,5 @@ router.post('/unfollow', UserControllers.unfollowUser);
 router.get('/', UserControllers.getAllUsers);
 router.get('/:id', UserControllers.getSingleUser);
 router.patch('/:id', UserControllers.updateUser);
+router.patch('/:id/block', UserControllers.blockUser);
+router.patch('/:id/unblock', UserControllers.unblockUser);

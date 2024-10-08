@@ -36,6 +36,16 @@ const updateUser = async (id: string, payload: Partial<TUser>) => {
   return updatedUser;
 };
 
+const updateUserStatus = async (id: string, status: string) => {
+  const updatedUser = await User.findByIdAndUpdate(id, { status }, { new: true });
+  if (!updatedUser) {
+      throw new Error("User not found");
+  }
+  return updatedUser;
+};
+
+
+
 const followUser = async (followerId: string, followingId: string) => {
   const follower = await User.findById(followerId);
   const following = await User.findById(followingId);
@@ -80,5 +90,6 @@ export const UserServices = {
   getSingleUserFromDB,
   followUser,
   unfollowUser,
-  updateUser
+  updateUser,
+  updateUserStatus
 };
