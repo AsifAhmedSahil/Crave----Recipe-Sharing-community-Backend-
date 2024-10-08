@@ -1,4 +1,4 @@
-import { USER_ROLE } from '../User/user.constant';
+import { USER_ROLE, USER_TYPES } from '../User/user.constant';
 
 export type TLoginUser = {
   email: string;
@@ -11,5 +11,6 @@ export type TRegisterUser = {
   username:string,
   password: string;
   profilePhoto?:string;
+  type:keyof typeof USER_TYPES,
   role: keyof typeof USER_ROLE;
 };

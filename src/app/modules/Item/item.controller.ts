@@ -110,7 +110,7 @@ const rateRecipe = catchAsync(async (req, res) => {
   const updatedRecipe = await recipeServices.rateRecipeInDB(recipeId, userId, stars);
   res.status(200).json({
     success: true,
-    message: "Recipe deleted successfully",
+    message: "Recipe rated successfully",
     data: updatedRecipe,
 });
 });

@@ -4,7 +4,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../../config';
 import AppError from '../../errors/AppError';
 import { createToken } from '../../utils/verifyJWT';
-import { USER_ROLE } from '../User/user.constant';
+import { USER_ROLE, USER_TYPES } from '../User/user.constant';
 import { User } from '../User/user.model';
 import { TLoginUser, TRegisterUser } from './auth.interface';
 import { sendEmail } from '../../utils/emailSender';
@@ -62,6 +62,8 @@ const registerAdmin = async (payload: TRegisterUser) => {
 
   // Set role to ADMIN
   payload.role = USER_ROLE.ADMIN;
+  payload.type = USER_TYPES.PREMIUM
+  
 
   // Create new admin user
   const newAdmin = await User.create(payload);

@@ -24,4 +24,5 @@ export interface TRecipe {
   upvotes: { userId: string }[]; // Added for upvotes
   downvotes: { userId: string }[]; // Added for downvotes
   type: 'free' | 'premium'; 
+  averageRating?: number;
 }

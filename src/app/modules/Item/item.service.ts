@@ -54,8 +54,11 @@ export const rateRecipeInDB = async (recipeId: string, userId: string, stars: nu
       recipe.ratings.push({ userId,recipeId, stars }); // Add new rating
   }
 
+  const totalStars = recipe.ratings.reduce((sum, rating) => sum + rating.stars, 0);
+    recipe.averageRating = recipe.ratings.length > 0 ? totalStars / recipe.ratings.length : 0;
   await recipe.save();
-  return recipe; // Return the updated recipe
+  return recipe 
+    
 };
 export const addCommentIntoDb = async (recipeId: string, userId: string, content:string) => {
     const recipe = await Recipe.findById(recipeId);
