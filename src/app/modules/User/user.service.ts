@@ -44,6 +44,14 @@ const updateUserStatus = async (id: string, status: string) => {
   return updatedUser;
 };
 
+const deleteUserAccount = async (id: string) => {
+  const deletedUser = await User.findByIdAndDelete(id);
+  if (!deletedUser) {
+      throw new Error("User not found");
+  }
+  return deletedUser;
+};
+
 
 
 const followUser = async (followerId: string, followingId: string) => {
@@ -91,5 +99,6 @@ export const UserServices = {
   followUser,
   unfollowUser,
   updateUser,
-  updateUserStatus
+  updateUserStatus,
+  deleteUserAccount
 };

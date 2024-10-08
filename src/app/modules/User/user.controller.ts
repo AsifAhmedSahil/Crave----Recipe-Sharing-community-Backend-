@@ -72,6 +72,19 @@ const unblockUser = catchAsync(async (req, res) => {
   });
 });
 
+const deleteUser = catchAsync(async (req, res) => {
+  const { id } = req.params; // Assuming userId is passed in the route params
+  console.log(id)
+  const deletedUser = await UserServices.deleteUserAccount(id);
+
+  sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'User account deleted successfully',
+      data: deletedUser,
+  });
+});
+
 const followUser = catchAsync(async (req, res) => {
   const { followerId, followingId } = req.body;
   const follower = await UserServices.followUser(followerId, followingId);
@@ -106,5 +119,6 @@ export const UserControllers = {
   unfollowUser,
   updateUser,
   blockUser,
-  unblockUser
+  unblockUser,
+  deleteUser
 };
