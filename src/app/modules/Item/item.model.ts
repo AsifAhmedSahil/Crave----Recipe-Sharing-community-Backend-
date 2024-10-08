@@ -52,6 +52,8 @@ const recipeModel = new Schema<TRecipe>({
         userId: { type: String },
         recipeId: { type: String },
         content: { type: String },
+        name: { type: String },
+        profilePhoto: { type: String },
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
       },

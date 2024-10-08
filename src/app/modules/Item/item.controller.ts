@@ -115,10 +115,10 @@ const rateRecipe = catchAsync(async (req, res) => {
 });
 });
 const addComment = catchAsync(async (req, res) => {
-    const { recipeId, content,userId } = req.body;
+    const { recipeId, content,userId,name,profilePhoto } = req.body;
     
 
-    const comments = await recipeServices.addCommentIntoDb(recipeId, userId, content);
+    const comments = await recipeServices.addCommentIntoDb(recipeId, userId, content,name,profilePhoto);
     res.status(200).json({
         success: true,
         message: "Comment posted successfully",

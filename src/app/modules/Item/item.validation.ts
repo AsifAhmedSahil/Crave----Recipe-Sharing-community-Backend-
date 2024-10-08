@@ -56,6 +56,8 @@ const addCommentValidation = z.object({
     body: z.object({
         userId: z.string(),
         recipeId: z.string(), 
+        name: z.string(), 
+        profilePhoto: z.string(), 
         content: z.string().min(1, { message: "Content cannot be empty" }), // Ensure content is not empty
     }),
 });

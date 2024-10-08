@@ -18,6 +18,8 @@ export interface TRecipe {
     userId: string;
     recipeId: string;
     content: string;
+    name?:string;
+    profilePhoto?:string;
     createdAt?: Date;
     updatedAt?: Date;
   }[];

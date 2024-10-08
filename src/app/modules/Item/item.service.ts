@@ -60,7 +60,7 @@ export const rateRecipeInDB = async (recipeId: string, userId: string, stars: nu
   return recipe 
     
 };
-export const addCommentIntoDb = async (recipeId: string, userId: string, content:string) => {
+export const addCommentIntoDb = async (recipeId: string, userId: string, content:string,name:string,profilePhoto:string) => {
     const recipe = await Recipe.findById(recipeId);
     if (!recipe) {
         throw new Error("Recipe not found");
@@ -70,6 +70,8 @@ export const addCommentIntoDb = async (recipeId: string, userId: string, content
         recipeId,
         userId,
         content,
+        name,
+        profilePhoto,
         createdAt: new Date(),
         updatedAt: new Date(),
     };
