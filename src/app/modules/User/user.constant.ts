@@ -7,6 +7,10 @@ export const USER_STATUS = {
   ACTIVE: 'ACTIVE',
   BLOCKED: 'BLOCKED',
 } as const;
+export const USER_TYPES = {
+  GENERAL: 'GENERAL',
+  PREMIUM: 'PREMIUM',
+} as const;
 
 export const UserSearchableFields = [
   'name',

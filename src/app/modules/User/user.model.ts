@@ -2,7 +2,7 @@
 import bcryptjs from 'bcryptjs';
 import { Schema, model } from 'mongoose';
 import config from '../../config';
-import { USER_ROLE, USER_STATUS } from './user.constant';
+import { USER_ROLE, USER_STATUS, USER_TYPES } from './user.constant';
 import { IUserModel, TUser } from './user.interface';
 
 const userSchema = new Schema<TUser, IUserModel>(
@@ -45,6 +45,11 @@ const userSchema = new Schema<TUser, IUserModel>(
     profilePhoto: {
       type: String,
       default: null
+    },
+    type: {
+      type: String,
+      enum: Object.keys(USER_TYPES),
+      default: USER_TYPES.GENERAL,
     },
   },
   {

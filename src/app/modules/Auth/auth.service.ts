@@ -18,6 +18,7 @@ const registerUser = async (payload: TRegisterUser) => {
   }
 
   payload.role = USER_ROLE.USER;
+  
 
   //create new user
   const newUser = await User.create(payload);
