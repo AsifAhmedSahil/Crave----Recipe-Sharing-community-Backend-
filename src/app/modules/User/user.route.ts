@@ -16,5 +16,6 @@ router.post(
   UserControllers.userRegister
 );
 router.post('/follow', UserControllers.followUser);
+router.post('/unfollow', UserControllers.unfollowUser);
 router.get('/', UserControllers.getAllUsers);
 router.get('/:id', UserControllers.getSingleUser);

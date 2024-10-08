@@ -42,7 +42,18 @@ const followUser = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: 'User Retrieved Successfully',
+    message: 'Follow the user',
+    data: follower,
+  });
+});
+const unfollowUser = catchAsync(async (req, res) => {
+  const { followerId, followingId } = req.body;
+  const follower = await UserServices.unfollowUser(followerId, followingId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Unfollow the user',
     data: follower,
   });
 });
@@ -54,5 +65,6 @@ export const UserControllers = {
   getSingleUser,
   userRegister,
   getAllUsers,
-  followUser 
+  followUser ,
+  unfollowUser
 };

@@ -49,9 +49,27 @@ const followUser = async (followerId: string, followingId: string) => {
   return { success: true };
 };
 
+const unfollowUser = async (followerId: string, followeeId: string) => {
+  const follower = await User.findById(followerId);
+  const followee = await User.findById(followeeId);
+
+  if (!follower || !followee) {
+      throw new Error("User not found");
+  }
+
+  follower.followingIds = follower?.followingIds?.filter(id => id !== followeeId);
+  followee.followerIds = followee?.followerIds?.filter(id => id !== followerId);
+
+  await follower.save();
+  await followee.save();
+
+  return follower; // Return the updated follower user object
+};
+
 export const UserServices = {
   createUser,
   getAllUsersFromDB,
   getSingleUserFromDB,
-  followUser
+  followUser,
+  unfollowUser
 };
