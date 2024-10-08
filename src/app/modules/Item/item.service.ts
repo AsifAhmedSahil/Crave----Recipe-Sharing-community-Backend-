@@ -30,10 +30,31 @@ const deleteRecipeFromDB = async (id: string) => {
     return result;
 };
 
+export const rateRecipeInDB = async (recipeId: string, userId: string, stars: number) => {
+  const recipe = await Recipe.findById(recipeId);
+  if (!recipe) {
+      throw new Error("Recipe not found");
+  }
+
+  const existingRating = recipe.ratings.find(r =>
+    // console.log(r.userId,"rrrrrrrrrrr")
+    r.userId && r.userId.toString() === userId
+    );
+  if (existingRating) {
+      existingRating.stars = stars; // Update existing rating
+  } else {
+      recipe.ratings.push({ userId,recipeId, stars }); // Add new rating
+  }
+
+  await recipe.save();
+  return recipe; // Return the updated recipe
+};
+
 export const recipeServices = {
     createRecipeIntoDB,
     getAllRecipesFromDB,
     getSingleRecipeFromDB,
     updateRecipeIntoDB,
     deleteRecipeFromDB,
+    rateRecipeInDB
 };

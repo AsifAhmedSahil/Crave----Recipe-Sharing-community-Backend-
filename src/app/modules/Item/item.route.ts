@@ -23,6 +23,13 @@ router.post(
   recipeController.createRecipe
 );
 
+router.post(
+  "/rating",
+  validateRequest(recipeValidations.rateRecipeValidation),
+  recipeController.rateRecipe
+
+)
+
 router.get('/recipes', recipeController.getAllRecipes);
 
 router.get('/recipe/:id', recipeController.getSingleRecipe);

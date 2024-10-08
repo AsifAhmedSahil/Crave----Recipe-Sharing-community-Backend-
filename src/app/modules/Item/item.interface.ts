@@ -13,4 +13,9 @@ export interface TRecipe {
   image?: string;
   creator: Types.ObjectId; // Assuming this is a User ID
   isDeleted?: boolean;
+  ratings: { userId: string;
+    recipeId:string;
+     stars: number 
+    }[]; 
+  comments: { user: Types.ObjectId; content: string }[]; 
 }

@@ -41,7 +41,18 @@ const updateRecipeValidation = z.object({
   }),
 });
 
+const rateRecipeValidation = z.object({
+  body: z.object({
+      userId: z.string(),
+      recipeId: z.string(),
+      stars: z.number().min(1).max(5, {
+          message: "Stars must be between 1 and 5",
+      }),
+  }),
+});
+
 export const recipeValidations = {
     createRecipeValidation,
-    updateRecipeValidation
+    updateRecipeValidation,
+    rateRecipeValidation
 };

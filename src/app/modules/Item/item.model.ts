@@ -35,6 +35,12 @@ const recipeModel = new Schema<TRecipe>({
         type: Boolean,
         default: false,
     },
+    ratings: { type: [{ 
+        userId: { type: String }, 
+        recipeId: { type: String }, 
+        stars: { type: Number, min: 1, max: 5 }
+     }], default: [] },
+    comments: { type: [{ user: { type: Schema.Types.ObjectId, ref: 'User' }, content: { type: String } }], default: [] }
 });
 
 export const Recipe = model<TRecipe>("Recipe", recipeModel);
