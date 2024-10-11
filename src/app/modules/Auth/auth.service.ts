@@ -10,21 +10,22 @@ import { TLoginUser, TRegisterUser } from './auth.interface';
 import { sendEmail } from '../../utils/emailSender';
 
 const registerUser = async (payload: TRegisterUser) => {
-  // checking if the user is exist
-  const user = await User.isUserExistsByEmail(payload?.email);
+  // Checking if the user exists
+  const user = await User.isUserExistsByEmail(payload.email);
 
   if (user) {
-    throw new AppError(httpStatus.NOT_FOUND, 'This user is already exist!');
+    throw new AppError(httpStatus.NOT_FOUND, 'This user already exists!');
   }
 
+  // Set the role and initialize followerIds and followingIds
   payload.role = USER_ROLE.USER;
-  
+  payload.followerIds = payload.followerIds || []; // Initialize as empty array if not provided
+  payload.followingIds = payload.followingIds || []; // Initialize as empty array if not provided
 
-  //create new user
+  // Create new user
   const newUser = await User.create(payload);
 
-  //create token and sent to the  client
-
+  // Create token and send to the client
   const jwtPayload = {
     _id: newUser._id,
     name: newUser.name,
@@ -33,6 +34,8 @@ const registerUser = async (payload: TRegisterUser) => {
     role: newUser.role,
     profilePhoto: newUser.profilePhoto,
     status: newUser.status,
+    followerIds: newUser.followerIds, // Added followerIds
+    followingIds: newUser.followingIds, // Added followingIds
   };
 
   const accessToken = createToken(
@@ -52,6 +55,7 @@ const registerUser = async (payload: TRegisterUser) => {
     refreshToken,
   };
 };
+
 
 const registerAdmin = async (payload: TRegisterUser) => {
   // Check if the admin already exists by email
