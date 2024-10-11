@@ -19,6 +19,7 @@ const registerUser = async (payload: TRegisterUser) => {
 
   // Set the role and initialize followerIds and followingIds
   payload.role = USER_ROLE.USER;
+  payload.bio="Edit Your Bio"
   payload.followerIds = payload.followerIds || []; // Initialize as empty array if not provided
   payload.followingIds = payload.followingIds || []; // Initialize as empty array if not provided
 
@@ -32,6 +33,7 @@ const registerUser = async (payload: TRegisterUser) => {
     email: newUser.email,
     username: newUser.username,
     role: newUser.role,
+    bio: newUser.bio,
     profilePhoto: newUser.profilePhoto,
     status: newUser.status,
     followerIds: newUser.followerIds, // Added followerIds

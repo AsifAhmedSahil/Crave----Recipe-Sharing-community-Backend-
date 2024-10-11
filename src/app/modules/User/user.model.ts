@@ -46,6 +46,10 @@ const userSchema = new Schema<TUser, IUserModel>(
       type: String,
       default: null,
     },
+    bio: {
+      type: String,
+      
+    },
     type: {
       type: String,
       enum: Object.keys(USER_TYPES),

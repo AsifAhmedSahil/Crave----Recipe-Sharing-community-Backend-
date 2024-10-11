@@ -28,6 +28,7 @@ const registerValidationSchema = z.object({
       required_error: 'User name is required',
     }),
     profilePhoto: z.string().optional(), // Made optional
+    bio: z.string().optional(), // Made optional
     // type: z.enum(['GENERAL', 'ADMIN', 'USER']), // Adjust based on your USER_TYPES
     // role: z.enum(['USER', 'ADMIN']), // Adjust based on your USER_ROLE
     followerIds: z.array(z.string()).optional(), // Optional
