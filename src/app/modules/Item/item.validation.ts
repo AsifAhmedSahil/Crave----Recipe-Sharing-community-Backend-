@@ -20,6 +20,8 @@ const createRecipeValidation = z.object({
         type: z.enum(['free', 'premium'], {
             message: "Type must be either 'free' or 'premium'",
         }),
+        tags: z.array(z.string()).nonempty("At least one tag is required."),
+    cookingTime: z.number().positive("Cooking time must be a positive number."),
     }),
 });
 

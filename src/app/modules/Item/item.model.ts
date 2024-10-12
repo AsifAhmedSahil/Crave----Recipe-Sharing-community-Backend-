@@ -67,7 +67,15 @@ const recipeModel = new Schema<TRecipe>({
     enum: ['free', 'premium'], // Allowable values
     required: true,
   },
-  averageRating: { type: Number, default: 0 }
+  averageRating: { type: Number, default: 0 },
+  tags: {
+    type: [String],
+    required: true, // or false depending on your requirements
+  },
+  cookingTime: {
+    type: Number,
+    required: true, // Cooking time in minutes
+  },
 });
 
 // recipeModel.virtual('averageRating').get(function () {

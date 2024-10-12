@@ -27,4 +27,6 @@ export interface TRecipe {
   downvotes: { userId: string }[]; // Added for downvotes
   type: 'free' | 'premium'; 
   averageRating?: number;
+  tags: string[]; // Array of tags (e.g., ["Vegetarian", "Gluten-Free"])
+  cookingTime: number; 
 }
