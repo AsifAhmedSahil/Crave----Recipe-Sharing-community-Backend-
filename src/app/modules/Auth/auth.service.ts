@@ -140,6 +140,8 @@ const loginUser = async (payload: TLoginUser) => {
     type: user.type,
     profilePhoto: user.profilePhoto,
     status: user.status,
+    followerIds: user.followerIds,
+    followingIds: user.followingIds,
   };
 
   const accessToken = createToken(
