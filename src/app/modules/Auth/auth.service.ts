@@ -34,6 +34,7 @@ const registerUser = async (payload: TRegisterUser) => {
     username: newUser.username,
     role: newUser.role,
     bio: newUser.bio,
+    type: newUser.type,
     profilePhoto: newUser.profilePhoto,
     status: newUser.status,
     followerIds: newUser.followerIds, // Added followerIds
@@ -136,6 +137,7 @@ const loginUser = async (payload: TLoginUser) => {
     email: user.email,
     username: user.username,
     role: user.role,
+    type: user.type,
     profilePhoto: user.profilePhoto,
     status: user.status,
   };

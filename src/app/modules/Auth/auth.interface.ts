@@ -21,6 +21,7 @@ export type TRegisterUser = {
   username: string;
   password: string;
   bio:string;
+ 
   profilePhoto?: string; // Optional property
   type: keyof typeof USER_TYPES; // Assuming USER_TYPES is defined elsewhere
   role: keyof typeof USER_ROLE; // Assuming USER_ROLE is defined elsewhere
