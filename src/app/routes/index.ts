@@ -3,7 +3,7 @@ import { AuthRoutes } from '../modules/Auth/auth.route';
 import { UserRoutes } from '../modules/User/user.route';
 import { ItemRoutes } from '../modules/Item/item.route';
 import { ItemCategoryRoutes } from '../modules/ItemCategory/itemCategory.route';
-import { ProfileRoutes } from '../modules/Profile/profile.route';
+
 import { PaymentRoutes } from '../modules/Payment/payments.route';
 
 
@@ -27,10 +27,7 @@ const moduleRoutes = [
     path: '/users',
     route: UserRoutes,
   },
-  {
-    path: '/profile',
-    route: ProfileRoutes,
-  },
+  
   {
     path:"/payment",
     route: PaymentRoutes

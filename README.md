@@ -222,7 +222,7 @@ To start the project in production mode:
 Once the server is running, you can access the application in your browser by visiting:
 
 ```bash
-http://localhost:5000
+https://crave-server-assignment-6.vercel.app
 ```
 
 This guide should help you set up, configure, and run your project seamlessly. If you encounter any issues or need further assistance, feel free to ask!

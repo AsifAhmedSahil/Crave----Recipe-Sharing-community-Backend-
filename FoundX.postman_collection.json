@@ -823,7 +823,7 @@
 	"variable": [
 		{
 			"key": "BASE_API",
-			"value": "http://localhost:5000/api/v1",
+			"value": "https://crave-server-assignment-6.vercel.app/api/v1",
 			"type": "string"
 		},
 		{
