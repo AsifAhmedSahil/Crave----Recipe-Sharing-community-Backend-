@@ -17,11 +17,15 @@ const getSingleRecipeFromDB = async (id: string) => {
     return await Recipe.findById(id).populate('creator', 'username');
 };
 
-const getMyRecipeFromDB = async (id: string) => {
-    const recipes = await Recipe.find({ creator: id, isDeleted: false });
+const getMyRecipeFromDB = async (id: string, limit: number,skip: number) => {
+    // Assuming you may also want to use 'skip' for pagination
+    const recipes = await Recipe.find({ creator: id, isDeleted: false })
+    .skip(skip)
+        .limit(limit); // Limit the number of recipes returned
 
     return recipes; // Return the array of recipes
 };
+
 
 
 

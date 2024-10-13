@@ -56,9 +56,15 @@ const getSingleRecipe = catchAsync(async (req, res) => {
     });
 });
 const getMyRecipe = catchAsync(async (req, res) => {
-    const { id } = req.params;
-    console.log(id)
-    const result = await recipeServices.getMyRecipeFromDB(id);
+    const { id } = req.params; // Get the user ID from the route parameter
+    const { limit , page } = req.query; // Get the limit from the query parameters
+    const limitNumber = parseInt(limit as string) || 10; // Default to 10 if not provided
+    const pageNumber = parseInt(page as string) || 1; // Default to page 1
+
+    const skip = (pageNumber - 1) * limitNumber; 
+
+    const result = await recipeServices.getMyRecipeFromDB(id, limitNumber,skip);
+    
     if (!result) {
         return res.status(404).json({
             success: false,
@@ -71,6 +77,7 @@ const getMyRecipe = catchAsync(async (req, res) => {
         data: result,
     });
 });
+
 
 
 const updateRecipe = catchAsync(async (req, res) => {
