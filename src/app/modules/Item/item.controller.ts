@@ -1,6 +1,7 @@
 // src/controllers/recipe.controller.ts
 
 
+
 import { catchAsync } from "../../utils/catchAsync";
 import { recipeServices } from "./item.service";
 
@@ -82,6 +83,9 @@ const getMyRecipe = catchAsync(async (req, res) => {
 
 const updateRecipe = catchAsync(async (req, res) => {
     const { id } = req.params;
+
+   
+
     const result = await recipeServices.updateRecipeIntoDB(id, req.body);
     if (!result) {
         return res.status(404).json({
