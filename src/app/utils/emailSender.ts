@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import config from '../config';
+
 
 
 export const sendEmail = async(to:string , html:string) =>{
@@ -9,7 +9,7 @@ export const sendEmail = async(to:string , html:string) =>{
         // secure: config.node_env === 'production',
          // Use `true` for port 465, `false` for all other ports
 
-         secure: config.NODE_ENV === 'production',
+         secure: false,
         auth: {
           user: "asifahmedsahil.007@gmail.com",
           pass: "zgqa hqru fbvo toqq",

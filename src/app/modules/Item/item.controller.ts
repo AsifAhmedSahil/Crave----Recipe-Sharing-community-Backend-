@@ -115,6 +115,22 @@ const deleteRecipe = catchAsync(async (req, res) => {
         data: result,
     });
 });
+const deleteComment = catchAsync(async (req, res) => {
+    
+    const { recipeId,commentId,userId } = req.params;
+    const result = await recipeServices.deleteCommentFromDB(recipeId,commentId,userId);
+    if (!result) {
+        return res.status(404).json({
+            success: false,
+            message: "Recipe not found",
+        });
+    }
+    res.status(200).json({
+        success: true,
+        message: "Recipe deleted successfully",
+        data: result,
+    });
+});
 
 const rateRecipe = catchAsync(async (req, res) => {
   const { recipeId, stars, userId } = req.body; // Accept userId from request body
@@ -169,5 +185,6 @@ export const recipeController = {
     addComment,
     upvote,
     downvote,
-    getMyRecipe
+    getMyRecipe,
+    deleteComment
 };

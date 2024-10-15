@@ -15,6 +15,7 @@ export interface TRecipe {
   isDeleted?: boolean;
   ratings: { userId: string; recipeId: string; stars: number }[];
   comments: {
+    _id?:string;
     userId: string;
     recipeId: string;
     content: string;

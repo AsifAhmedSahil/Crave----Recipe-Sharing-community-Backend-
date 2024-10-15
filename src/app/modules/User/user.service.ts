@@ -24,6 +24,7 @@ const getAllUsersFromDB = async (query: Record<string, unknown>) => {
 };
 
 const getSingleUserFromDB = async (id: string) => {
+  console.log(id)
   const user = await User.findById(id);
 
   return user;
@@ -50,6 +51,7 @@ const updateUserStatus = async (id: string, status: string) => {
 };
 
 const deleteUserAccount = async (id: string) => {
+  console.log(id)
   const deletedUser = await User.findByIdAndDelete(id);
   if (!deletedUser) {
     throw new Error('User not found');

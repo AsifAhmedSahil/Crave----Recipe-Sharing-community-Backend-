@@ -41,6 +41,27 @@ const deleteRecipeFromDB = async (id: string) => {
     }
     return result;
 };
+const deleteCommentFromDB = async (recipeId:string,commentId:string,userId:string) => {
+    const recipe = await Recipe.findById(recipeId);
+    
+    if (!recipe) {
+        throw new Error("Recipe not found");
+    }
+
+    // Check if the comment belongs to the user (optional, for authorization)
+    const comment = recipe.comments.find(comment => comment._id && comment._id.toString() === commentId && comment.userId === userId);
+    if (!comment) {
+        throw new Error("Comment not found or does not belong to user");
+    }
+
+    // Remove the comment from the comments array
+    recipe.comments = recipe.comments.filter(comment => comment._id && comment._id.toString() !== commentId);
+    
+    // Save the updated recipe
+    const updatedRecipe = await recipe.save();
+    
+    return updatedRecipe;
+};
 
 export const rateRecipeInDB = async (recipeId: string, userId: string, stars: number) => {
   const recipe = await Recipe.findById(recipeId);
@@ -143,6 +164,7 @@ export const recipeServices = {
     addCommentIntoDb,
     upvoteRecipe,
     downvoteRecipe,
-    getMyRecipeFromDB
+    getMyRecipeFromDB,
+    deleteCommentFromDB
     // deleteUserComment
 };

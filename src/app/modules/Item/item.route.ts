@@ -57,6 +57,9 @@ router.put(
 router.delete('/recipe/:id',
   //  auth(USER_ROLE.USER),
   recipeController.deleteRecipe);
+router.delete('/:recipeId/comment/:commentId/:userId',
+  //  auth(USER_ROLE.USER),
+  recipeController.deleteComment);
 
 router.post("/recipe/upvote", recipeController.upvote);
 router.post("/recipe/downvote", recipeController.downvote);
