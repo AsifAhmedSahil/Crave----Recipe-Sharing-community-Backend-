@@ -11,10 +11,10 @@ export const initiatePayment = async (paymentData: any) => {
       store_id: config.store_id,
       signature_key: config.signature_key,
       tran_id: paymentData.transactionId,
-      // success_url: `https://crave-server-assignment-6.vercel.app/api/payment/confirmation`,
-      success_url: `http://localhost:5000/api/v1/payment/confirmation/?transactionId=${paymentData.transactionId}&userId=${paymentData._id}`,
-      fail_url: `http://localhost:5000/api/v1/payment/confirmation/?status=failed`,
-      cancel_url: "http://localhost:5000",
+      
+      success_url: `https://crave-server-assignment-6.vercel.app/api/v1/payment/confirmation/?transactionId=${paymentData.transactionId}&userId=${paymentData._id}`,
+      fail_url: `https://crave-server-assignment-6.vercel.app/api/v1/payment/confirmation/?status=failed`,
+      cancel_url: "https://crave-client-assignment-6.vercel.app",
       amount: paymentData.amount,
       currency: "BDT",
       desc: "Merchant Registration Payment",
@@ -54,24 +54,3 @@ export const verifyPayment = async (transactionId: string) => {
 };
 
 
-// const response = await axios.post(process.env.PAYMENT_URL!, {
-//   store_id: config.store_id,
-//   signature_key: config.signature_key,
-//   tran_id: paymentData.transactionId,
-//   success_url: `https://crave-server-assignment-6.vercel.app/api/payment/confirmation/?transactionId=${paymentData.transactionId}&status=success`,
-//   fail_url: `https://crave-server-assignment-6.vercel.app/api/v1/payment/confirmation/?status=failed`,
-//   cancel_url: "http://localhost:5173/",
-//   amount: paymentData.payableAmount,
-//   currency: "BDT",
-//   desc: "Merchant Registration Payment",
-//   cus_name: paymentData.customerName,
-//   cus_email: "asif@gmail.com",
-//   cus_add1: "N/A",
-//   cus_add2: "N/A",
-//   cus_city: "N/A",
-//   cus_state: "N/A",
-//   cus_postcode: "N/A",
-//   cus_country: "N/A",
-//   cus_phone: "N/A",
-//   type: "json",
-// });

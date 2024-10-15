@@ -1,4 +1,4 @@
-// src/services/recipe.service.ts
+
 
 import { TRecipe } from "./item.interface";
 import { Recipe } from "./item.model";
@@ -10,7 +10,7 @@ const createRecipeIntoDB = async (payload: TRecipe) => {
 };
 
 const getAllRecipesFromDB = async () => {
-    return await Recipe.find({ isDeleted: false }).populate('creator', 'username'); // Populate creator's username
+    return await Recipe.find({ isDeleted: false }).populate('creator', 'username'); 
 };
 
 const getSingleRecipeFromDB = async (id: string) => {
@@ -21,9 +21,9 @@ const getMyRecipeFromDB = async (id: string, limit: number,skip: number) => {
     // Assuming you may also want to use 'skip' for pagination
     const recipes = await Recipe.find({ creator: id, isDeleted: false })
     .skip(skip)
-        .limit(limit); // Limit the number of recipes returned
+        .limit(limit); 
 
-    return recipes; // Return the array of recipes
+    return recipes; 
 };
 
 
@@ -48,16 +48,16 @@ const deleteCommentFromDB = async (recipeId:string,commentId:string,userId:strin
         throw new Error("Recipe not found");
     }
 
-    // Check if the comment belongs to the user (optional, for authorization)
+   
     const comment = recipe.comments.find(comment => comment._id && comment._id.toString() === commentId && comment.userId === userId);
     if (!comment) {
         throw new Error("Comment not found or does not belong to user");
     }
 
-    // Remove the comment from the comments array
+    
     recipe.comments = recipe.comments.filter(comment => comment._id && comment._id.toString() !== commentId);
     
-    // Save the updated recipe
+    
     const updatedRecipe = await recipe.save();
     
     return updatedRecipe;
@@ -70,13 +70,13 @@ export const rateRecipeInDB = async (recipeId: string, userId: string, stars: nu
   }
 
   const existingRating = recipe.ratings.find(r =>
-    // console.log(r.userId,"rrrrrrrrrrr")
+    
     r.userId && r.userId.toString() === userId
     );
   if (existingRating) {
-      existingRating.stars = stars; // Update existing rating
+      existingRating.stars = stars; 
   } else {
-      recipe.ratings.push({ userId,recipeId, stars }); // Add new rating
+      recipe.ratings.push({ userId,recipeId, stars }); 
   }
 
   const totalStars = recipe.ratings.reduce((sum, rating) => sum + rating.stars, 0);
@@ -103,7 +103,7 @@ export const addCommentIntoDb = async (recipeId: string, userId: string, content
 
     recipe.comments.push(newComment);
     await recipe.save();
-    return recipe.comments; // Return the updated comments
+    return recipe.comments; 
 };
 
 export const upvoteRecipe = async (recipeId: string, userId: string) => {
@@ -112,20 +112,20 @@ export const upvoteRecipe = async (recipeId: string, userId: string) => {
         throw new Error("Recipe not found");
     }
 
-    // Check if the user has already upvoted
+    
     const existingUpvote = recipe.upvotes.find(upvote => upvote.userId === userId);
     if (existingUpvote) {
         throw new Error("You have already upvoted this recipe");
     }
 
-    // Remove any existing downvote by the user
+    
     recipe.downvotes = recipe.downvotes.filter(downvote => downvote.userId !== userId);
 
-    // Add the upvote
+    
     recipe.upvotes.push({ userId });
     await recipe.save();
 
-    return recipe; // Return the updated recipe
+    return recipe; 
 };
 export const downvoteRecipe = async (recipeId: string, userId: string) => {
     const recipe = await Recipe.findById(recipeId);
@@ -133,20 +133,20 @@ export const downvoteRecipe = async (recipeId: string, userId: string) => {
         throw new Error("Recipe not found");
     }
 
-    // Check if the user has already downvoted
+
     const existingDownvote = recipe.downvotes.find(downvote => downvote.userId === userId);
     if (existingDownvote) {
         throw new Error("You have already downvoted this recipe");
     }
 
-    // Remove any existing upvote by the user
+    
     recipe.upvotes = recipe.upvotes.filter(upvote => upvote.userId !== userId);
 
-    // Add the downvote
+   
     recipe.downvotes.push({ userId });
     await recipe.save();
 
-    return recipe; // Return the updated recipe
+    return recipe; 
 
     
 };
@@ -166,5 +166,5 @@ export const recipeServices = {
     downvoteRecipe,
     getMyRecipeFromDB,
     deleteCommentFromDB
-    // deleteUserComment
+    
 };

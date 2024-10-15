@@ -1,18 +1,6 @@
 import { z } from 'zod';
 
-// const registerValidationSchema = z.object({
-//   body: z.object({
-//     name: z.string({
-//       required_error: 'Name is required',
-//     }),
-//     email: z.string({
-//       required_error: 'Email is required',
-//     }),
-//     password: z.string({ required_error: 'Password is required' }),
-//     username: z.string({ required_error: 'User name is required' }),
-//     profilePhoto: z.string(),
-//   }),
-// });
+
 const registerValidationSchema = z.object({
   body: z.object({
     name: z.string({
@@ -27,12 +15,11 @@ const registerValidationSchema = z.object({
     username: z.string({
       required_error: 'User name is required',
     }),
-    profilePhoto: z.string().optional(), // Made optional
-    bio: z.string().optional(), // Made optional
-    // type: z.enum(['GENERAL', 'ADMIN', 'USER']), // Adjust based on your USER_TYPES
-    // role: z.enum(['USER', 'ADMIN']), // Adjust based on your USER_ROLE
-    followerIds: z.array(z.string()).optional(), // Optional
-    followingIds: z.array(z.string()).optional(), // Optional
+    profilePhoto: z.string().optional(), 
+    bio: z.string().optional(),
+    
+    followerIds: z.array(z.string()).optional(), 
+    followingIds: z.array(z.string()).optional(), 
   }),
 });
 

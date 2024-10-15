@@ -5,9 +5,9 @@ import { paymentServices } from "./Payments.service";
 import { Request, Response } from "express";
 
 const createPayment = catchAsync(async (req, res) => {
-    const paymentData = req.body; // Extract payment data from the request body
+    const paymentData = req.body; 
   
-    // Call the payment service to create a payment
+    
     const payment = await paymentServices.createPayment(paymentData);
   
     sendResponse(res, {

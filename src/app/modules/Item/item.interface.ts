@@ -1,4 +1,4 @@
-// src/interfaces/recipe.interface.ts
+
 
 
 
@@ -7,11 +7,11 @@ export interface TRecipe {
   description: string;
   ingredients: {
     name: string;
-    quantity: string; // e.g., "2 cups", "1 tablespoon"
+    quantity: string; 
   }[];
   instructions: string;
   image?: string;
-  creator:string; // Assuming this is a User ID
+  creator:string; 
   isDeleted?: boolean;
   ratings: { userId: string; recipeId: string; stars: number }[];
   comments: {
@@ -24,10 +24,10 @@ export interface TRecipe {
     createdAt?: Date;
     updatedAt?: Date;
   }[];
-  upvotes: { userId: string }[]; // Added for upvotes
-  downvotes: { userId: string }[]; // Added for downvotes
+  upvotes: { userId: string }[];
+  downvotes: { userId: string }[]; 
   type: 'free' | 'premium'; 
   averageRating?: number;
-  tags: string[]; // Array of tags (e.g., ["Vegetarian", "Gluten-Free"])
+  tags: string[]; 
   cookingTime: number; 
 }

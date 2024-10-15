@@ -1,4 +1,4 @@
-// src/validations/recipe.validation.ts
+
 
 import { isValidObjectId } from "mongoose";
 import { z } from "zod";
@@ -10,7 +10,7 @@ const createRecipeValidation = z.object({
         ingredients: z.array(
             z.object({
                 name: z.string(),
-                quantity: z.string(), // e.g., "2 cups", "1 tablespoon"
+                quantity: z.string(),
             })
         ),
         instructions: z.string(),
@@ -32,7 +32,7 @@ const updateRecipeValidation = z.object({
       ingredients: z.array(
           z.object({
               name: z.string().optional(),
-              quantity: z.string().optional(), // e.g., "2 cups", "1 tablespoon"
+              quantity: z.string().optional(), 
           })
       ).optional(),
       instructions: z.string().optional(),
@@ -60,7 +60,7 @@ const addCommentValidation = z.object({
         recipeId: z.string(), 
         name: z.string(), 
         profilePhoto: z.string(), 
-        content: z.string().min(1, { message: "Content cannot be empty" }), // Ensure content is not empty
+        content: z.string().min(1, { message: "Content cannot be empty" }), 
     }),
 });
 

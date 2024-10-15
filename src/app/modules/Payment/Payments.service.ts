@@ -32,13 +32,13 @@ const createPayment = async (payload: TPayment) => {
   };
   const paymentSession = await initiatePayment(paymentPayload);
   console.log(paymentSession);
-  return paymentSession; // Return the created payment
+  return paymentSession; 
 };
 
 const confirmationService = async (transactionId: string, userId: string) => {
     try {
       const verifyResponse = await verifyPayment(transactionId);
-      console.log('Verify Response:', verifyResponse); // Log the response
+      console.log('Verify Response:', verifyResponse); 
   
       let userDetails: userDetails | null = null;
       if (verifyResponse && verifyResponse.pay_status === 'Successful') {
@@ -62,7 +62,7 @@ const confirmationService = async (transactionId: string, userId: string) => {
           console.warn(`No user found with userid: ${userId}`);
         }
       }
-    //   return userDetails
+    
   
       const filepath = join(__dirname, '../../../views/confirmation.html');
       let template = readFileSync(filepath, 'utf-8');

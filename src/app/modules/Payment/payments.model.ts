@@ -1,8 +1,8 @@
-// models/Payment.ts
+
 import { Schema, model} from 'mongoose';
 import { IPaymentModel } from './payments.interface';
 
-// Define the schema using IPaymentModel directly
+
 const paymentSchema = new Schema<IPaymentModel>(
   {
     userId: {

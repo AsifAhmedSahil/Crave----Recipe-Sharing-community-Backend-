@@ -98,7 +98,7 @@ const unfollowUser = async (followerId: string, followeeId: string) => {
   await follower.save();
   await followee.save();
 
-  return follower; // Return the updated follower user object
+  return follower; 
 };
 
 export const UserServices = {

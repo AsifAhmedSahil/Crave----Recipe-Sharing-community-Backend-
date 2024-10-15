@@ -39,7 +39,7 @@ const getSingleUser = catchAsync(async (req, res) => {
 });
 
 const updateUser = catchAsync(async (req, res) => {
-  const userId = req.params.id; // Get user ID from the URL
+  const userId = req.params.id; 
   const updatedUser = await UserServices.updateUser(userId, req.body);
 
   sendResponse(res, {
@@ -51,7 +51,7 @@ const updateUser = catchAsync(async (req, res) => {
 });
 
 const blockUser = catchAsync(async (req, res) => {
-  const { id } = req.params; // Assuming userId is passed in the route params
+  const { id } = req.params; 
   const updatedUser = await UserServices.updateUserStatus(id, 'BLOCKED');
 
   sendResponse(res, {
@@ -63,7 +63,7 @@ const blockUser = catchAsync(async (req, res) => {
 });
 
 const unblockUser = catchAsync(async (req, res) => {
-  const { id } = req.params; // Assuming userId is passed in the route params
+  const { id } = req.params; 
   const updatedUser = await UserServices.updateUserStatus(id, 'ACTIVE');
 
   sendResponse(res, {
@@ -75,7 +75,7 @@ const unblockUser = catchAsync(async (req, res) => {
 });
 
 const deleteUser = catchAsync(async (req, res) => {
-  const { id } = req.params; // Assuming userId is passed in the route params
+  const { id } = req.params; 
   console.log(id)
   const deletedUser = await UserServices.deleteUserAccount(id);
 

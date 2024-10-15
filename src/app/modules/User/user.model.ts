@@ -67,8 +67,8 @@ const userSchema = new Schema<TUser, IUserModel>(
 
 userSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this; // doc
-  // hashing password and save into DB
+  const user = this; 
+  
   if (user.isModified('password')) {
     if (!user.password) {
         return next(new Error("Password is required"));
@@ -83,7 +83,7 @@ userSchema.pre('save', async function (next) {
 next();
 });
 
-// set '' after saving password
+
 userSchema.post('save', function (doc, next) {
   doc.password = '';
   next();

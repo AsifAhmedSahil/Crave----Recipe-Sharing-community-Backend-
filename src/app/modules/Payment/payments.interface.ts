@@ -1,8 +1,8 @@
-// types/payment.interface.ts
+
 import { Document } from 'mongoose';
 
 export type TPayment = {
-  userId: string; // Reference to User
+  userId: string; 
   name: string;
   email: string;
   address: string;

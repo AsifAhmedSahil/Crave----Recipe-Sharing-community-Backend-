@@ -1,4 +1,4 @@
-// src/models/recipe.model.ts
+
 
 import { Schema, model } from 'mongoose';
 import { TRecipe } from './item.interface';
@@ -29,7 +29,7 @@ const recipeModel = new Schema<TRecipe>({
   },
   creator: {
     type: String,
-    // Assuming you have a User model
+    
     required: true,
   },
   isDeleted: {
@@ -60,32 +60,24 @@ const recipeModel = new Schema<TRecipe>({
     ],
     default: [],
   },
-  upvotes: [{ userId: { type: String } }], // Upvotes array
-  downvotes: [{ userId: { type: String } }], // Downvotes array
+  upvotes: [{ userId: { type: String } }], 
+  downvotes: [{ userId: { type: String } }], 
   type: {
     type: String,
-    enum: ['free', 'premium'], // Allowable values
+    enum: ['free', 'premium'],
     required: true,
   },
   averageRating: { type: Number, default: 0 },
   tags: {
     type: [String],
-    required: true, // or false depending on your requirements
+    required: true,
   },
   cookingTime: {
     type: Number,
-    required: true, // Cooking time in minutes
+    required: true, 
   },
 });
 
-// recipeModel.virtual('averageRating').get(function () {
-//   if (this.ratings.length === 0) return 0;
 
-//   const totalStars = this.ratings.reduce(
-//     (sum, rating) => sum + rating.stars,
-//     0
-//   );
-//   return totalStars / this.ratings.length;
-// });
 
 export const Recipe = model<TRecipe>('Recipe', recipeModel);

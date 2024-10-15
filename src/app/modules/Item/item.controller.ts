@@ -26,18 +26,7 @@ const getAllRecipes = catchAsync(async (req, res) => {
     });
 });
 
-// const getAllRecipes = catchAsync(async (req, res) => {
-//   const userId = req.user._id; // Assuming you have user authentication
-//   const query = { creator: userId, ...req.query }; // Add user ID to query
 
-//   const recipes = await SearchRecipesQueryMaker(query);
-
-//   res.status(200).json({
-//     success: true,
-//     message: "Fetched user's recipes successfully",
-//     data: recipes,
-//   });
-// });
 
 
 
@@ -57,10 +46,10 @@ const getSingleRecipe = catchAsync(async (req, res) => {
     });
 });
 const getMyRecipe = catchAsync(async (req, res) => {
-    const { id } = req.params; // Get the user ID from the route parameter
-    const { limit , page } = req.query; // Get the limit from the query parameters
-    const limitNumber = parseInt(limit as string) || 10; // Default to 10 if not provided
-    const pageNumber = parseInt(page as string) || 1; // Default to page 1
+    const { id } = req.params; 
+    const { limit , page } = req.query; 
+    const limitNumber = parseInt(limit as string) || 10; 
+    const pageNumber = parseInt(page as string) || 1; 
 
     const skip = (pageNumber - 1) * limitNumber; 
 
@@ -133,7 +122,7 @@ const deleteComment = catchAsync(async (req, res) => {
 });
 
 const rateRecipe = catchAsync(async (req, res) => {
-  const { recipeId, stars, userId } = req.body; // Accept userId from request body
+  const { recipeId, stars, userId } = req.body; 
   const updatedRecipe = await recipeServices.rateRecipeInDB(recipeId, userId, stars);
   res.status(200).json({
     success: true,
